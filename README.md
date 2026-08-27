@@ -86,3 +86,8 @@ Additional contributor and environment notes live in:
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [HACKING.md](HACKING.md)
 - [CHANGELOG.md](CHANGELOG.md)
+
+## Compatibility
+
+The crate targets Firecracker microVM APIs and is tested against the latest stable toolchain. Breaking API changes are documented in [CHANGELOG.md](CHANGELOG.md) with migration notes.
+
