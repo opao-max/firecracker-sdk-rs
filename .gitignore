@@ -4,3 +4,8 @@
 *.log
 .idea/
 .vscode/
+
+# Coverage
+*.profraw
+lcov.info
+
