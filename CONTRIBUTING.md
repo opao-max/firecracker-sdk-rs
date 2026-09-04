@@ -1,52 +1,47 @@
-# Contributing
+﻿# Contributing
 
-This repository is a from-scratch Rust implementation of the Firecracker Go SDK.
-Contributions should preserve that constraint.
+Thanks for your interest in improving this project! This document explains how
+to set up a development environment and get your changes merged.
 
-## Core Rules
-
-- Do not copy code from sibling Rust SDK repositories or other third-party Rust
-  projects into this crate.
-- The Go SDK may be used as a behavioral and layout reference, but Rust code in
-  this repository should be written directly for this crate.
-- Keep module boundaries and test organization as close to the Go SDK as is
-  practical without fighting Rust conventions.
-
-## Before Opening a Change
-
-- Prefer a small, scoped change over a cross-repository rewrite.
-- Record behavior changes in `CHANGELOG.md` when they affect public semantics.
-- Keep tests with the migrated feature area whenever possible.
-
-## Required Validation
-
-Run the full local gate before proposing a change:
+## Development setup
 
 ```bash
-cargo fmt --all
-cargo test --quiet
-cargo test --quiet --doc
-cargo check --examples
-cargo bench --no-run
+git clone https://github.com/opao-max/firecracker-sdk-rs.git
+cd firecracker-sdk-rs
+cargo --version   # requires a recent stable Rust toolchain
+cargo build
 ```
 
-Or run the same set through:
+## Workflow
+
+1. Fork the repository and create a branch from `main`:
+   `git checkout -b feat/short-description`
+2. Make your change, keeping commits focused and using
+   [Conventional Commits](https://www.conventionalcommits.org/):
+   `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`.
+3. Before pushing, run the same checks as CI:
 
 ```bash
-make check
+cargo fmt --all -- --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all-features
 ```
 
-## Environment Notes
+4. Push your branch and open a Pull Request, filling in the PR template.
 
-- Firecracker binary used by the current real tests: `/data/firecracker`
-- Kernel directory used by the current real tests: `/data_jfs/fc-kernels`
-- Some integration tests require root privileges, `/dev/kvm`, `/dev/vhost-vsock`,
-  or local CNI capabilities.
+## Code style
 
-## Review Expectations
+- Format with `rustfmt`; keep clippy warning-free.
+- Public items need doc comments with examples where useful.
+- Prefer safe Rust; justify any `unsafe` block and add tests around it.
+- Semantic-version public API changes; note them in `CHANGELOG.md`.
 
-- Behavior parity matters more than superficial API similarity.
-- Tests should cover both pure logic and real Firecracker paths when the
-  environment allows it.
-- If parity cannot be achieved because an external binary or image is missing,
-  document the exact blocker in the change description.
+## Reporting bugs
+
+Please use the Bug Report issue template and include a minimal reproduction.
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the
+Apache License 2.0.
+
